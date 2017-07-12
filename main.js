@@ -95,18 +95,34 @@ let formData = [
 
 
 // -------- Your Code Goes Below this Line --------
-let fileds = document.querySelector('#fields');
 
 for (let i = 0; i < formData.length; i++) {
 
-  let ielement = document.createElement("input");
+  if (formData[i]["type"] === "textarea") {
+    let textarea = document.createElement('textarea');
+    fields.appendChild(textarea);
+    textarea.placeholder = formData[i].label;
+    textarea.id = formData[i].id;
+    textarea.type = formData[i].type;
 
-  let itextcontent = document.createTextNode(formData[i]);
+  } else if (formData[i]["type"] === "select") {
+    let select = document.createElement('select');
+    select.placeholder = formData[i].label;
+    select.id = formData[i].id;
+    select.type = formData[i].type;
+    fields.appendChild(select);
 
-  ielement.appendChild(ielement);
+    for (let x = 0; x < formData[i].options.length; x++) {
+      let options = document.createElement('option');
 
-  itextcontent.appendChild(itextcontent);
-  
-  formData.appendChild(ielement);
+      select.appendChild(options);
 
+      options.value = formData[i].options[x].value;
+      options.text = formData[i].options[x].label;
+    }
+  } else {
+    let ielement = document.createElement('input');
+    ielement.placeholder = formData[i].label;
+    fields.appendChild(ielement);
+  }
 }
